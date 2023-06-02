@@ -3,11 +3,6 @@ package ru.job4j.assertj;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// 1. Создайте класс NameLoad.
-// Этот класс принимает массив строк вида {key=value, key1=value1, key2=value2},
-// проверяет каждую строку на соответствие формату "ключ=значение",
-// разделяет строку на пару ключ - значение и помещает эту пару в карту.
-
 public class NameLoad {
     private final Map<String, String> values = new HashMap<>();
 
