@@ -13,14 +13,12 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             capacity++;
         }
         container = (T[]) new Object[capacity];
-        size = 0;
-        modCount = 0;
     }
 
     @Override
     public void add(T value) {
         if (container.length == size) {
-            container = Arrays.copyOf(container, container.length * 2);
+            grow();
         }
         container[size++] = value;
         modCount++;
@@ -77,14 +75,15 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
             @Override
             public T next() {
-                if (iteratorControler != modCount) {
-                    throw new ConcurrentModificationException();
-                }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return container[point++];
             }
         };
+    }
+
+    private void grow() {
+        container = Arrays.copyOf(container, container.length * 2);
     }
 }
