@@ -41,6 +41,8 @@ public class ForwardLinked<T> implements Iterable<T> {
         if (head != null) {
             result = head.getItem();
             head = head.getNext();
+            modCount++;
+            size--;
         } else {
             throw new NoSuchElementException();
         }
