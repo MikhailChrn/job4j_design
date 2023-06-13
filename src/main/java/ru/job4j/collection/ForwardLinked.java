@@ -6,6 +6,9 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class ForwardLinked<T> implements Iterable<T> {
+    // Допишите функционал класса ForwardLinked,
+    // добавив в него метод
+    // public void addFirst(T value).
     private int size = 0;
     private int modCount = 0;
     private Node<T> head;
@@ -40,12 +43,14 @@ public class ForwardLinked<T> implements Iterable<T> {
         if (head == null) {
             throw new NoSuchElementException();
         }
-        Node<T> result = head;
-        head = head.getNext();
-        result.setNext(null);
+        T result = head.getItem();
+        Node<T> newHead = head.getNext();
+        head.setItem(null);
+        head.setNext(null);
+        head = newHead;
         modCount++;
         size--;
-        return result.getItem();
+        return result;
     }
 
     @Override
@@ -89,6 +94,10 @@ public class ForwardLinked<T> implements Iterable<T> {
 
         public Node<T> getNext() {
             return next;
+        }
+
+        public void setItem(T item) {
+            this.item = item;
         }
 
         public T getItem() {
