@@ -14,8 +14,7 @@ public class SimpleSet<T> implements Set<T> {
         boolean result = true;
         if (contains(value)) {
             result = false;
-        }
-        if (result) {
+        } else {
             set.add(value);
         }
         return result;
