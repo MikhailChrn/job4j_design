@@ -8,8 +8,6 @@ import java.util.NoSuchElementException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-// 3. Дописать тесты
-
 class SimpleSetTest {
 
     @Test
