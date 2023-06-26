@@ -17,20 +17,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
-    @Override
-    public boolean put(K key, V value) {
-        boolean result = false;
-        int bucket = indexFor(hash(Objects.hashCode(key)));
-        if (table[bucket] == null) {
-            modCount++;
-            count++;
-            table[bucket] = new MapEntry<>(key, value);
-            result = true;
+    private static class MapEntry<K, V> {
+        K key;
+        V value;
+
+        public MapEntry(K key, V value) {
+            this.key = key;
+            this.value = value;
         }
-        if (count >= capacity * LOAD_FACTOR) {
-            expand();
-        }
-        return result;
     }
 
     private int hash(int hashCode) {
@@ -41,40 +35,59 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return hash & (capacity - 1);
     }
 
+    private int getBucketNumber(K key) {
+        return indexFor(hash(Objects.hashCode(key)));
+    }
+
+    private boolean compareElement(K key) {
+        return table[getBucketNumber(key)] != null
+                && Objects.hashCode(table[getBucketNumber(key)].key)
+                                                == Objects.hashCode(key)
+                && Objects.equals(table[getBucketNumber(key)].key, key);
+    }
+
     private void expand() {
         capacity *= 2;
         MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> entry : table) {
             if (entry != null) {
-                int bucket = indexFor(hash(Objects.hashCode(entry.key)));
-                newTable[bucket] = entry;
+                newTable[getBucketNumber(entry.key)] = entry;
             }
         }
         table = newTable;
     }
 
     @Override
+    public boolean put(K key, V value) {
+        boolean result = false;
+        if (table[getBucketNumber(key)] == null) {
+            modCount++;
+            count++;
+            table[getBucketNumber(key)] = new MapEntry<>(key, value);
+            result = true;
+        }
+        if (count >= capacity * LOAD_FACTOR) {
+            expand();
+        }
+        return result;
+    }
+
+    @Override
     public V get(K key) {
-        int bucket = indexFor(hash(Objects.hashCode(key)));
         V value = null;
-        if (table[bucket] != null
-                && Objects.hashCode(table[bucket].key) == Objects.hashCode(key)
-                && Objects.equals(table[bucket].key, key)) {
-            value = table[bucket].value;
+        if (compareElement(key)) {
+            value = table[getBucketNumber(key)].value;
         }
         return value;
     }
 
     @Override
     public boolean remove(K key) {
-        int bucket = indexFor(hash(Objects.hashCode(key)));
         boolean result = false;
-        if (table[bucket] != null
-                && Objects.hashCode(table[bucket].key) == Objects.hashCode(key)
-                && Objects.equals(table[bucket].key, key)) {
+        if (compareElement(key)) {
             count--;
             modCount++;
-            table[bucket] = null;
+            table[getBucketNumber(key)] = null;
             result = true;
         }
         return result;
@@ -106,16 +119,5 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 return table[cursor++].key;
             }
         };
-    }
-
-    private static class MapEntry<K, V> {
-
-        K key;
-        V value;
-
-        public MapEntry(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
     }
 }
