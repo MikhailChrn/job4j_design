@@ -39,11 +39,11 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return indexFor(hash(Objects.hashCode(key)));
     }
 
-    private boolean compareElement(K key) {
-        return table[getBucketNumber(key)] != null
-                && Objects.hashCode(table[getBucketNumber(key)].key)
-                                                == Objects.hashCode(key)
-                && Objects.equals(table[getBucketNumber(key)].key, key);
+    private boolean compareElement(int bucket, K key) {
+        return table[bucket] != null
+                && Objects.hashCode(table[bucket].key)
+                                    == Objects.hashCode(key)
+                && Objects.equals(table[bucket].key, key);
     }
 
     private void expand() {
@@ -60,10 +60,11 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean result = false;
-        if (table[getBucketNumber(key)] == null) {
+        int bucket = getBucketNumber(key);
+        if (table[bucket] == null) {
             modCount++;
             count++;
-            table[getBucketNumber(key)] = new MapEntry<>(key, value);
+            table[bucket] = new MapEntry<>(key, value);
             result = true;
         }
         if (count >= capacity * LOAD_FACTOR) {
@@ -75,8 +76,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         V value = null;
-        if (compareElement(key)) {
-            value = table[getBucketNumber(key)].value;
+        int bucket = getBucketNumber(key);
+        if (compareElement(bucket, key)) {
+            value = table[bucket].value;
         }
         return value;
     }
@@ -84,10 +86,11 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         boolean result = false;
-        if (compareElement(key)) {
+        int bucket = getBucketNumber(key);
+        if (compareElement(bucket, key)) {
             count--;
             modCount++;
-            table[getBucketNumber(key)] = null;
+            table[bucket] = null;
             result = true;
         }
         return result;
