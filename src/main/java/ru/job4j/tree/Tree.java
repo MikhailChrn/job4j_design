@@ -11,8 +11,6 @@ public interface Tree<E> {
     Optional<Node<E>> findBy(E value);
 
     class Node<E> {
-        // Класс Node описывает узел дерева.
-        // Узел содержит хранимое значение и ссылки на дочерние узлы.
         final E value;
         final List<Node<E>> children = new ArrayList<>();
 
