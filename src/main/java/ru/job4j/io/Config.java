@@ -16,17 +16,30 @@ public class Config {
         this.path = path;
     }
 
+    private boolean validate(String line) {
+        if (line.startsWith("=")) {
+            throw new IllegalArgumentException(
+                    "line does not contain a key");
+        }
+
+        if (line.indexOf("=") == line.length() - 1
+                && line.length() > 0) {
+            throw new IllegalArgumentException(
+                    "line does not contain a value");
+        }
+
+        return !line.startsWith("#") && !"".equals(line);
+    }
+
     public void load() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().forEach(line -> {
-                String[] str = line.split("=");
-                if (!line.startsWith("#")
-                        && !line.startsWith(" ")
-                        && str.length == 2) {
-                    values.put(str[0], str[1]);
-                }
-            });
+            read.lines()
+                    .filter(this::validate)
+                    .forEach(line -> {
+                        String[] str = line.split("=", 2);
+                        values.put(str[0], str[1]);
+                    });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,7 +60,7 @@ public class Config {
         return out.toString();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Config conf = new Config("data/app.properties");
         conf.load();
         for (Map.Entry<String, String> entry : conf.values.entrySet()) {
