@@ -40,7 +40,7 @@ class ConfigTest {
     void whenThrowsIllegalArgumentException() {
         String path = "./data/wrong_pair_including_file.properties";
         Config config = new Config(path);
-        assertThatThrownBy(() ->config.load())
+        assertThatThrownBy(() -> config.load())
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
