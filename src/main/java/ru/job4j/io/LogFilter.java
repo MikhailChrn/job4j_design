@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogFilter {
+    public static final String NOT_FOUND = "404";
+
     public List<String> filter(String file) {
         ArrayList<String> result = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file)); ) {
             in.lines().forEach(line -> {
-                if (line.split(" ")[8].equals("404")) {
+                if (NOT_FOUND.equals(line.split(" ")[8])) {
                     result.add(line);
                 }
             });
