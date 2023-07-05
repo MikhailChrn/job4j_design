@@ -7,9 +7,9 @@ import java.util.List;
 public class LogFilter {
     public static final String NOT_FOUND = "404";
 
-    public List<String> filter(String file) {
+    public static List<String> filter(String file) {
         ArrayList<String> result = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(file)); ) {
+        try (BufferedReader in = new BufferedReader(new FileReader(file));) {
             in.lines().forEach(line -> {
                 if (NOT_FOUND.equals(line.split(" ")[8])) {
                     result.add(line);
@@ -21,11 +21,20 @@ public class LogFilter {
         return result;
     }
 
-    public static void main(String[] args) {
-        LogFilter logFilter = new LogFilter();
-        List<String> log = logFilter.filter("data/log.txt");
-        for (String str : log) {
-            System.out.println(str);
+    public static void save(List<String> log, String file) {
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(file, true)))) {
+            for (String str : log) {
+                out.printf("%s%n", str);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        List<String> log = filter("data/log.txt");
+        save(log, "data/404.txt");
     }
 }
