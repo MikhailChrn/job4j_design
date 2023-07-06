@@ -37,10 +37,20 @@ class ConfigTest {
     }
 
     @Test
-    void whenThrowsIllegalArgumentException() {
+    void whenThrowsIllegalArgumentExceptionWithoutValue() {
         String path = "./data/wrong_pair_including_file.properties";
         Config config = new Config(path);
         assertThatThrownBy(() -> config.load())
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("line does not contain a value");
+    }
+
+    @Test
+    void whenThrowsIllegalArgumentExceptionWithoutKey() {
+        String path = "./data/wrong_pair_without_key_including_file.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(() -> config.load())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("line does not contain a key");
     }
 }
