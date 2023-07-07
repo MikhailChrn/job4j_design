@@ -3,6 +3,8 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.Arrays;
 
+import static java.lang.String.format;
+
 public class Analysis {
     private final static String[] UNAVAILABLE_STATUS
             = new String[] {"400", "500"};
@@ -24,20 +26,19 @@ public class Analysis {
 
     public void unavailable(String source, String target) {
         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
-            StringBuilder lineBuilder = new StringBuilder();
+            StringBuilder resultBuilder = new StringBuilder();
             boolean isAvailablePeriod = true;
             while (read.ready()) {
                 String[] line = read.readLine().split(" ", 2);
                 if (!isAvailable(line[0]) & isAvailablePeriod) {
                     isAvailablePeriod = false;
-                    lineBuilder.setLength(0);
-                    lineBuilder.append(line[1] + ";");
+                    resultBuilder.append(format("%s;", line[1]));
                 } else if (isAvailable(line[0]) & !isAvailablePeriod) {
                     isAvailablePeriod = true;
-                    lineBuilder.append(line[1] + ";");
-                    save(lineBuilder.toString(), target);
+                    resultBuilder.append(format("%s;\n", line[1]));
                 }
             }
+            save(resultBuilder.toString(), target);
         } catch (IOException e) {
             e.printStackTrace();
         }
