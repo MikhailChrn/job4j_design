@@ -38,7 +38,8 @@ public class Analysis {
                     resultBuilder.append(format("%s;\n", line[1]));
                 }
             }
-            save(resultBuilder.toString(), target);
+            String result = resultBuilder.toString();
+            save(result.substring(0, result.length() - 1), target);
         } catch (IOException e) {
             e.printStackTrace();
         }
