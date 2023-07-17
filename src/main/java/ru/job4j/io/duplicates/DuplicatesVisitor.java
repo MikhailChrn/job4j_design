@@ -21,9 +21,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty currentFile = new FileProperty(attrs.size(), file.getFileName().toString());
         if (!allFiles.containsKey(currentFile)) {
-            List<Path> filePathList = new ArrayList<>();
-            filePathList.add(file.toAbsolutePath());
-            allFiles.put(currentFile, filePathList);
+            allFiles.put(currentFile, new ArrayList<>(List.of(file.toAbsolutePath())));
         } else {
             allFiles.get(currentFile).add(file.toAbsolutePath());
         }
