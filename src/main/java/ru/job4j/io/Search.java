@@ -11,15 +11,14 @@ import java.util.function.Predicate;
 import static java.lang.String.format;
 
 public class Search {
-    private static Boolean validateArgs(String arg0) {
-        File file = new File(arg0);
+    private static void validateArgs(String[] arg) {
+        File file = new File(arg[0]);
         if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
         }
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
         }
-        return true;
     }
 
     private static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
@@ -29,14 +28,10 @@ public class Search {
     }
 
     public static void main(String[] args) throws IOException {
-        if (args.length < 2) {
+        if (args.length != 2) {
             throw new IllegalArgumentException("Invalid arguments.");
         }
-        try {
-            validateArgs(args[0]);
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Caught IOException: " + ex.getMessage());
-        }
+        validateArgs(args);
         Path start = Paths.get(args[0]);
         search(start, p -> p.toFile().getName().endsWith(format(".%s", args[1]))).forEach(System.out::println);
     }
