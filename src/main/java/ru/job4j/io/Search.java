@@ -19,6 +19,9 @@ public class Search {
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
         }
+        if (!Character.isLetterOrDigit(arg[1].charAt(0))) {
+            throw new IllegalArgumentException(String.format("Invalid file extension \"%s\"", arg[1]));
+        }
     }
 
     private static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
