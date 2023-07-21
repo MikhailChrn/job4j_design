@@ -13,9 +13,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
-    private ArgsName jvm;
-
-    public void packFiles(List<Path> sources, File target) {
+    public static void packFiles(List<Path> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (Path path : sources) {
                 zip.putNextEntry(new ZipEntry(path.toString()));
@@ -28,7 +26,7 @@ public class Zip {
         }
     }
 
-    public void packSingleFile(File source, File target) {
+    public static void packSingleFile(File source, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             zip.putNextEntry(new ZipEntry(source.getPath()));
             try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
@@ -45,9 +43,8 @@ public class Zip {
         return searcher.getPaths();
     }
 
-    private void getArgsName(String[] args) {
-        this.jvm = ArgsName.of(args);
-        File dir = new File(jvm.get("d"));
+    private static void getArgsName(ArgsName argsName) {
+        File dir = new File(argsName.get("d"));
         if (!dir.exists()) {
             throw new IllegalArgumentException(
                     String.format("Not exist %s", dir.getAbsoluteFile())
@@ -58,13 +55,13 @@ public class Zip {
                     String.format("Not directory %s", dir.getAbsoluteFile())
             );
         }
-        String exclude = jvm.get("e");
+        String exclude = argsName.get("e");
         if (exclude.length() < 2 || exclude.charAt(0) != '.') {
             throw new IllegalArgumentException(
                     String.format("Invalid exclude %s", exclude)
             );
         }
-        String output = jvm.get("o");
+        String output = argsName.get("o");
         if (!output.endsWith(".zip")) {
             throw new IllegalArgumentException(
                     String.format("Output source must end with '%s'", output)
@@ -78,10 +75,10 @@ public class Zip {
                     "There should be three parameters.");
 
         }
-        Zip zip = new Zip();
-        zip.getArgsName(args);
-        Path start = Paths.get(zip.jvm.get("d"));
-        List<Path> pathList = search(start, p -> !p.toFile().getName().endsWith(zip.jvm.get("e")));
-        zip.packFiles(pathList, new File(zip.jvm.get("o")));
+        ArgsName jvm = ArgsName.of(args);
+        getArgsName(jvm);
+        Path start = Paths.get(jvm.get("d"));
+        List<Path> pathList = search(start, p -> !p.toFile().getName().endsWith(jvm.get("e")));
+        packFiles(pathList, new File(jvm.get("o")));
     }
 }
