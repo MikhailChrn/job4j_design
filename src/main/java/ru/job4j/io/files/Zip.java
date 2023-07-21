@@ -13,6 +13,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
+    private ArgsName jvm;
 
     public void packFiles(List<Path> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
@@ -44,13 +45,8 @@ public class Zip {
         return searcher.getPaths();
     }
 
-    private static ArgsName getArgsName(String[] args) {
-        if (args.length != 3) {
-            throw new IllegalArgumentException(
-                    String.format("There should be three parameters.")
-            );
-        }
-        ArgsName jvm = ArgsName.of(args);
+    private void getArgsName(String[] args) {
+        this.jvm = ArgsName.of(args);
         File dir = new File(jvm.get("d"));
         if (!dir.exists()) {
             throw new IllegalArgumentException(
@@ -74,14 +70,18 @@ public class Zip {
                     String.format("Output source must end with '%s'", output)
             );
         }
-        return jvm;
     }
 
     public static void main(String[] args) throws IOException {
-        ArgsName jvm = getArgsName(args);
+        if (args.length != 3) {
+            throw new IllegalArgumentException(
+                    "There should be three parameters.");
+
+        }
         Zip zip = new Zip();
-        Path start = Paths.get(jvm.get("d"));
-        List<Path> pathList = search(start, p -> !p.toFile().getName().endsWith(jvm.get("e")));
-        zip.packFiles(pathList, new File(jvm.get("o")));
+        zip.getArgsName(args);
+        Path start = Paths.get(zip.jvm.get("d"));
+        List<Path> pathList = search(start, p -> !p.toFile().getName().endsWith(zip.jvm.get("e")));
+        zip.packFiles(pathList, new File(zip.jvm.get("o")));
     }
 }
