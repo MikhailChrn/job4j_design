@@ -1,14 +1,12 @@
 package ru.job4j.io.files;
 
 import ru.job4j.io.ArgsName;
-import ru.job4j.io.SearchFiles;
+import ru.job4j.io.Search;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -37,13 +35,7 @@ public class Zip {
         }
     }
 
-    public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
-        SearchFiles searcher = new SearchFiles(condition);
-        Files.walkFileTree(root, searcher);
-        return searcher.getPaths();
-    }
-
-    private static void getArgsName(ArgsName argsName) {
+    private static void checkArgs(ArgsName argsName) {
         File dir = new File(argsName.get("d"));
         if (!dir.exists()) {
             throw new IllegalArgumentException(
@@ -73,12 +65,11 @@ public class Zip {
         if (args.length != 3) {
             throw new IllegalArgumentException(
                     "There should be three parameters.");
-
         }
         ArgsName jvm = ArgsName.of(args);
-        getArgsName(jvm);
+        checkArgs(jvm);
         Path start = Paths.get(jvm.get("d"));
-        List<Path> pathList = search(start, p -> !p.toFile().getName().endsWith(jvm.get("e")));
+        List<Path> pathList = Search.search(start, p -> !p.toFile().getName().endsWith(jvm.get("e")));
         packFiles(pathList, new File(jvm.get("o")));
     }
 }
