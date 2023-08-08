@@ -22,9 +22,10 @@ public class Main {
                         + "["
                             + "{\"description\":\"first\",\"priority\":1},"
                             + "{\"description\":\"second\",\"priority\":2},"
-                            + "{\"description\":\"thrid\",\"priority\":3}"
+                            + "{\"description\":\"third\",\"priority\":3}"
                         + "]"
                 + "}";
+        System.out.println(employeeJson);
         final Employee employeeMod = gson.fromJson(employeeJson, Employee.class);
         String employeeBeforeString = gson.toJson(employeeMod);
 
