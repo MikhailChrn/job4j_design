@@ -14,6 +14,11 @@ public class EchoServer {
     private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args) {
+        LOG.trace("trace message");
+        LOG.debug("debug message");
+        LOG.info("info message");
+        LOG.warn("warn message");
+        LOG.error("error message");
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
                 Socket socket = server.accept();
