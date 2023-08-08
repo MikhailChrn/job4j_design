@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- комментарии -->
-<employee>
-    <isManager>false</isManager>
-    <name>Mikhail</name>
-    <position>lead-developer</position>
-    <age>40</age>
-    <contact>
-        <phone>+7.777.777.77.77</phone>
-    </contact>
+<employee isManager = "false" name = "Mikhail" position = "lead-developer" age = "40">
+    <contact phone = "+7.777.777.77.77"/>
     <tasks>
-        <task>
-            <description>first</description>
-            <priority>1</priority>
-        </task>
-        <task>
-            <description>second</description>
-            <priority>2</priority>
-        </task>
-        <task>
-            <description>third</description>
-            <priority>3</priority>
-        </task>
+        <task description = "first" priority = "1"/>
+        <task description = "second" priority = "2"/>
+        <task description = "third" priority = "3"/>
     </tasks>
 </employee>

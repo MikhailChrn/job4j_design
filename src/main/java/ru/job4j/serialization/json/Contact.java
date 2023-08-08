@@ -1,11 +1,14 @@
 package ru.job4j.serialization.json;
 
-public class Contact {
-    private final String phone;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAttribute;
 
-    public Contact(String phone) {
-        this.phone = phone;
-    }
+@XmlRootElement(name = "contact")
+public class Contact {
+    @XmlAttribute(name = "phone")
+    private String phone;
+
+    public Contact() { }
 
     @Override
     public String toString() {

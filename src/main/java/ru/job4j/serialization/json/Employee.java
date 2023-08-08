@@ -1,32 +1,31 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "employee")
 public class Employee {
-    private final boolean isManager;
-    private final String name;
-    private final String position;
-    private final int age;
-    private final Contact contact;
+    @XmlAttribute(name = "isManage")
+    private boolean isManager;
+
+    @XmlAttribute(name = "name")
+    private String name;
+
+    @XmlAttribute(name = "position")
+    private String position;
+
+    @XmlAttribute(name = "age")
+    private int age;
+
+    @XmlElement(name = "contact")
+    private Contact contact;
+
+    @XmlElementWrapper(name = "tasks")
+    @XmlElement(name = "task")
     private Task[] tasks;
 
-    public Employee(boolean isManager, String name, String position,
-                    int age, Contact contact, Task[] tasks) {
-        this.isManager = isManager;
-        this.name = name;
-        this.position = position;
-        this.age = age;
-        this.contact = contact;
-        this.tasks = tasks;
-    }
-
-    public Task[] getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Task[] tasks) {
-        this.tasks = tasks;
-    }
+    public Employee() { }
 
     @Override
     public String toString() {
