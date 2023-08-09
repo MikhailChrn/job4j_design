@@ -12,4 +12,12 @@ public class Task {
     private int priority;
 
     public Task() { }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
 }

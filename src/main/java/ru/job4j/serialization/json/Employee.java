@@ -27,6 +27,30 @@ public class Employee {
 
     public Employee() { }
 
+    public boolean isManager() {
+        return isManager;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public Task[] getTasks() {
+        return tasks;
+    }
+
     @Override
     public String toString() {
         return "Employee{"
