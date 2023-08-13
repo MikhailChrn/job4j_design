@@ -40,7 +40,7 @@ public class FilesFinder {
             };
         }
         if ("regex".equals(argsName.get("t"))) {
-            Pattern pattern = Pattern.compile(getRegexFromMask(argsName.get("n")));
+            Pattern pattern = Pattern.compile(argsName.get("n"));
             predicate = new Predicate<Path>() {
                 @Override
                 public boolean test(Path path) {
