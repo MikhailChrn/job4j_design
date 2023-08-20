@@ -11,8 +11,8 @@ create table contracts(
 
 create table students_contracts(
     id serial primary key,
-    student_id integer references Students(id),
-    contract_id integer references Contracts(id)
+    student_id integer references Students(id) unique ,
+    contract_id integer references Contracts(id) unique
 );
 
 insert into students(name_of_student) values ('Михаил');
