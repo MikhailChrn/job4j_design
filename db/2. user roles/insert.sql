@@ -1,16 +1,11 @@
-insert into users(id, name_of_user) values (1, 'Михаил');
-insert into users(id, name_of_user) values (2, 'Анастасия');
-insert into users(id, name_of_user) values (3, 'Елена');
-insert into users(id, name_of_user) values (4, 'Марина');
-
-insert into roles (title, description, user_id)
-    values ('Инженер-прогаммист', 'Адиминистратор ИС', 1);
-insert into roles (title, description, user_id)
-    values ('Бухгалтер', 'Главный бухгалтер организации', 2);
-insert into roles (title, description, user_id)
-    values ('Руководитель отдела продаж', 'Руководитель отдела продаж организации', 3);
-insert into roles (title, description, user_id)
-    values ('Продавец-кассир', 'Продавец-кассир торгового зала', 4);
+insert into roles (id, title, description)
+    values (1, 'Инженер-прогаммист', 'Адиминистратор ИС');
+insert into roles (id, title, description)
+    values (2, 'Бухгалтер', 'Главный бухгалтер организации');
+insert into roles (id, title, description)
+    values (3, 'Руководитель отдела продаж', 'Руководитель отдела продаж организации');
+insert into roles (id, title, description)
+    values (4, 'Продавец-кассир', 'Продавец-кассир торгового зала');
 
 insert into rules (id, title, description)
     values (1, 'Администратор', 'Администратор ИС');
@@ -23,26 +18,28 @@ insert into roles_rules (role_id, rule_id) values (2, 2);
 insert into roles_rules (role_id, rule_id) values (3, 2);
 insert into roles_rules (role_id, rule_id) values (4, 2);
 
+insert into users (id, name_of_user, role_id) values (1, 'Михаил', 1);
+insert into users (id, name_of_user, role_id) values (2, 'Анастасия', 2);
+insert into users (id, name_of_user, role_id) values (3, 'Елена', 3);
+insert into users (id, name_of_user, role_id) values (4, 'Марина', 4);
+
 insert into categories (id, title) values (1, 'Услуга');
 insert into categories (id, title) values (2, 'Товар');
 
-insert into items (id, title, description, user_id, categorie_id)
-    values (1, 'HQ77012', 'Подшипник ступицы задний', 4, 2);
-insert into items (id, title, description, user_id, categorie_id)
-    values (2, 'CF-940C', 'Фильтр салонный угольный', 4, 2);
-insert into items (id, title, description, user_id, categorie_id)
-    values (3, '105_107', 'Регулятор холостого хода ОРИГИНАЛ', 3, 2);
+insert into states (id, title)
+    values (1, 'Черновик');
+insert into states (id, title)
+    values (2, 'В работе');
+insert into states (id, title)
+    values (3, 'Готов');
 
-insert into states (id, title, item_id)
-    values (1, 'Заказ №1 - в работе', 1);
-insert into states (id, title, item_id)
-    values (2, 'Заказ №1 - выполнен', 1);
-insert into states (id, title, item_id)
-    values (3, 'Заказ №2 - в работе', 2);
-insert into states (id, title, item_id)
-    values (4, 'Заказ №2 - выполнен', 2);
-insert into states (id, title, item_id)
-    values (5, 'Заказ №3 - поставщик ожидает оплату', 3);
+insert into items (id, title, description, user_id, categorie_id, state_id)
+    values (1, 'HQ77012', 'Подшипник ступицы задний', 4, 2, 2);
+insert into items (id, title, description, user_id, categorie_id, state_id)
+    values (2, 'CF-940C', 'Фильтр салонный угольный', 4, 2, 2);
+insert into items (id, title, description, user_id, categorie_id, state_id)
+    values (3, '105_107', 'Регулятор холостого хода ОРИГИНАЛ', 3, 2, 1);
+
 
 insert into comments (title, description, item_id)
     values ('Передать ООО "Авангард"', 'передать до 31.08.2023', 1);

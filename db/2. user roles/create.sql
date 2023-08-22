@@ -1,13 +1,7 @@
-create table users (
-    id serial primary key,
-    name_of_user varchar(255)
-);
-
 create table roles (
     id serial primary key,
     title varchar(255),
-    description text,
-    user_id integer references users(id)
+    description text
 );
 
 create table rules (
@@ -22,8 +16,18 @@ create table roles_rules (
     rule_id integer references rules(id)
 );
 
+create table users (
+    id serial primary key,
+    name_of_user varchar(255),
+    role_id integer references roles(id)
+);
 
 create table categories (
+    id serial primary key,
+    title varchar(255)
+);
+
+create table states (
     id serial primary key,
     title varchar(255)
 );
@@ -33,13 +37,8 @@ create table items (
     title varchar(255),
     description text,
     user_id integer references users(id),
-    categorie_id integer references categories(id)
-);
-
-create table states (
-    id serial primary key,
-    title varchar(255),
-    item_id integer references items(id)
+    categorie_id integer references categories(id),
+    state_id integer references states(id)
 );
 
 create table comments (
