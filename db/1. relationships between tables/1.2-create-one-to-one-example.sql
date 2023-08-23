@@ -28,3 +28,5 @@ insert into students_contracts(student_id, contract_id) values (2, 2);
 insert into students_contracts(student_id, contract_id) values (3, 3);
 
 select * from students_contracts;
+
+select * from contracts;
