@@ -69,11 +69,9 @@ select p.name, p.price, p.expired_date
 from product as p
 where p.expired_date < now();
 
-select t.name, max(p.price) "Самый дорогой продукт в категории"
+select p.name "Самая дорогая позиция", p.price
 from product as p
-join type as t
-on p.type_id = t.id
-group by t.name;
+where p.price = (select max(price) from product);
 
 select t.name, count(*) "Количество продуктов в категории"
 from product as p
