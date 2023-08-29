@@ -14,9 +14,7 @@
     будет заносить имя, цену и текущую дату в таблицу history_of_price.
 */
 
-/* 1 */
-
-create or replace function adding_tax_to_costt()
+create or replace function adding_tax_to_cost()
     returns trigger as
 $$
     BEGIN
