@@ -32,6 +32,10 @@ select b.title as "книги, у которых нет экранизации" 
 except
 select m.name  from movie m;
 
-select b.title as "уникальные названия произведений" from book b
-union
+select b.title as "уникальные названия книг" from book b
+except
 select m.name  from movie m;
+
+select m.name as "уникальные названия фильмов" from movie m
+except
+select b.title from book b;
