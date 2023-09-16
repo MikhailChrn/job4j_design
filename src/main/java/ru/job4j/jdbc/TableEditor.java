@@ -1,14 +1,13 @@
 package ru.job4j.jdbc;
 
-import java.io.FileReader;
+import java.io.InputStream;
+
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringJoiner;
 
 public class TableEditor implements AutoCloseable {
-    public static final String PATH_TO_PROPERTIES = "src/main/resources/app.properties";
-
     private Connection connection;
 
     private Properties config;
@@ -19,8 +18,9 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void initConnection() {
-        try (FileReader fileReader = new FileReader(PATH_TO_PROPERTIES)) {
-            config.load(fileReader);
+        try (InputStream is = TableEditor.class.getClassLoader()
+                .getResourceAsStream("app.properties")) {
+            config.load(is);
             String driver = config.getProperty("job4j.datasource.driver");
             String url = config.getProperty("job4j.datasource.url");
             String username = config.getProperty("job4j.datasource.username");
