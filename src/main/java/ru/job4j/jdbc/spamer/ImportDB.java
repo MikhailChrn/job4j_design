@@ -26,6 +26,8 @@ public class ImportDB {
                 String[] elem = row.split(";", 2);
                 if (elem.length == 2 && elem[0] != "" && elem[1] != "") {
                     users.add(new User(elem[0], elem[1]));
+                } else {
+                    throw new IllegalArgumentException("Invalid argument");
                 }
             });
         }
