@@ -1,4 +1,4 @@
-package ru.job4j.jdbc.preparedStatement;
+package ru.job4j.jdbc.preparedstatement;
 
 import ru.job4j.jdbc.TableEditor;
 
@@ -14,7 +14,6 @@ public class PreparedStatementDemo {
     private static Connection connection;
 
     private Properties config;
-
 
     public PreparedStatementDemo() throws Exception {
         config = new Properties();

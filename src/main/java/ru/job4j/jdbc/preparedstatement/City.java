@@ -1,4 +1,4 @@
-package ru.job4j.jdbc.preparedStatement;
+package ru.job4j.jdbc.preparedstatement;
 
 public class City {
 
