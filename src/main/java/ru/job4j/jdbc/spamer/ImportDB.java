@@ -24,11 +24,10 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(row -> {
                 String[] elem = row.split(";", 2);
-                if (elem.length == 2 && elem[0] != "" && elem[1] != "") {
-                    users.add(new User(elem[0], elem[1]));
-                } else {
+                if (elem.length != 2 || elem[0] == "" || elem[1] == "") {
                     throw new IllegalArgumentException("Invalid argument");
                 }
+                users.add(new User(elem[0], elem[1]));
             });
         }
         return users;
