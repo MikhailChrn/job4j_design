@@ -25,20 +25,13 @@ public class CyclicIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        if (this.data.size() == 0) {
+        if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
-        return this.data.get(getIndex());
-    }
-
-    int getIndex() {
-        int res = this.index;
-        if (this.index == this.data.size() - 1) {
+        if (this.index == this.data.size()) {
             this.index = 0;
-        } else {
-            this.index++;
         }
 
-        return res;
+        return this.data.get(index++);
     }
 }
