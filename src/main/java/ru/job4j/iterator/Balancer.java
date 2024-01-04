@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 
 public class Balancer {
     private static List<ArrayList<Integer>> nodes;
-    private static CyclicIterator<ArrayList<Integer>> cyclicNodeIterator;
     private static Iterator<Integer> source;
 
     public Balancer(List<ArrayList<Integer>> nodes, Iterator<Integer> source) {
@@ -19,9 +18,13 @@ public class Balancer {
         if (nodes.size() == 0) {
             throw new NoSuchElementException("Empty list of nodes");
         }
-        cyclicNodeIterator = new CyclicIterator<>(nodes);
+
+        int index = 0;
         while (source.hasNext()) {
-            cyclicNodeIterator.next().add(source.next());
+            if (index == nodes.size()) {
+                index = 0;
+            }
+            nodes.get(index++).add(source.next());
         }
     }
 }
