@@ -94,8 +94,7 @@ public class PreparedStatementDemo {
         City city = new City(1, "Samara", 1_300_000);
         PreparedStatementDemo preparedStatementDemo = new PreparedStatementDemo();
         preparedStatementDemo.insert(city);
-        List<City> result = new ArrayList<>();
-        result = preparedStatementDemo.findAll();
+        List<City> result = preparedStatementDemo.findAll();
         result.forEach(ct -> {
                     System.out.printf("%d - %s - %d\n",
                     ct.getId(), ct.getName(), ct.getPopulation());

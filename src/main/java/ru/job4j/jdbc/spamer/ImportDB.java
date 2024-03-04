@@ -67,7 +67,7 @@ public class ImportDB {
                 .getResourceAsStream("spamer.properties")) {
             cfg.load(in);
         }
-        ImportDB db = new ImportDB(cfg, "src/main/java/ru/job4j/jdbc/spamer/data/dump.txt");
+        ImportDB db = new ImportDB(cfg, "src/main/java/ru/job4j/jdbc/spamer/data/dump_corr.txt");
         db.save(db.load());
     }
 }
