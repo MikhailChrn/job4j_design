@@ -95,7 +95,7 @@ public class FilesFinder {
                 + "-n - имя файла, маска, либо регулярное выражение.\n"
                 + "-t - тип поиска: mask искать по маске, name по полному совпадение имени, regex по регулярному выражению.\n"
                 + "-o - результат записать в файл.\n");
-        System.out.println("Например:  -d=c:  -n=*.?xt -t=mask -o=log.txt");
+        System.out.println("Например:  -d=c:  -n=*.?xt -t=mask -o=log-before.txt");
     }
 
     public static void main(String[] args) throws IOException {
