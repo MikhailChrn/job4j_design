@@ -1,11 +1,6 @@
 package ru.job4j.cache;
 
-/**
- * Создать структуру данных типа кеш. Кеш должен быть абстрактный.
- * То есть необходимо, чтобы можно было задать ключ получения объекта кеша,
- * и, в случае если его нет в памяти, задать поведение загрузки этого объекта в кеш.
- */
-
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,5 +30,5 @@ public abstract class AbstractCache<K, V> {
         return result;
     }
 
-    protected abstract V load(K key);
+    protected abstract V load(K key) throws IOException;
 }
