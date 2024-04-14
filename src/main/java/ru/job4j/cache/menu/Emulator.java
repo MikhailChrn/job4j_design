@@ -17,7 +17,7 @@ public class Emulator {
     public static final Integer SET_CACHED_DIRECTORY = 1;
     public static final Integer VIEW_ALL_FILES_IN_DIRECTORY = 2;
     public static final Integer VIEW_ALL_FILES_IN_CACHE = 3;
-    public static final Integer UPLOAD_FILE_IN_CACHE = 4;
+    public static final Integer UPLOAD_FILE_INTO_CACHE = 4;
     public static final Integer GET_FILE_FROM_CACHE = 5;
 
     public static final String SELECT = "Выберите меню";
@@ -26,7 +26,6 @@ public class Emulator {
     public static final String FILE_IS_ALREADY_IN_CACHE = "Содержимое файла уже в кеше.";
     public static final String CACHE_ISNOT_DEFINED = "Кеш не создан. Укажите директорию.";
     public static final String SELECT_FILE = "Укажите имя файла для получения содержмого из кеша";
-    public static final String FILE_NOT_EXIST_IN_CACHE = "Файл отсутствует в кеше.";
     public static final String FILE_NOT_EXIST = "Файл отсутствует в папке.";
     public static final String EXIT = "До свидания !";
 
@@ -46,6 +45,11 @@ public class Emulator {
             result = false;
         }
         return result;
+    }
+
+    private static boolean checkFileTitle(String title, DirFileCache dirFileCache) throws IOException {
+        return dirFileCache.getAllValidTitles().stream()
+                .anyMatch(str -> title.equals(str));
     }
 
     private static void start(Scanner scanner) throws IOException {
@@ -80,7 +84,7 @@ public class Emulator {
                 }
                 dirFileCache.printAllFilesInCache();
 
-            } else if (UPLOAD_FILE_IN_CACHE == userChoice) {
+            } else if (UPLOAD_FILE_INTO_CACHE == userChoice) {
                 if (!checkDirCache(dirFileCache)) {
                     continue;
                 }
@@ -101,12 +105,12 @@ public class Emulator {
                     continue;
                 }
                 System.out.println(SELECT_FILE);
-                String result = dirFileCache.get(scanner.nextLine());
-                if (result == null) {
-                    System.out.println(FILE_NOT_EXIST_IN_CACHE);
+                String title = scanner.nextLine();
+                if (!checkFileTitle(title, dirFileCache)) {
+                    System.out.println(FILE_NOT_EXIST);
                     continue;
                 }
-                System.out.println(result);
+                System.out.println(dirFileCache.get(title));
 
             } else {
                 run = false;

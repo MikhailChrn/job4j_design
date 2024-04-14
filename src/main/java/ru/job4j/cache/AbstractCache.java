@@ -11,10 +11,13 @@ public abstract class AbstractCache<K, V> {
     private final Map<K, SoftReference<V>> cache = new HashMap<>();
 
     public final void put(K key, V value) {
-        cache.putIfAbsent(key, new SoftReference<V>(value));
+        cache.put(key, new SoftReference<V>(value));
     }
 
-    public final V get(K key) {
+    public final V get(K key) throws IOException {
+        if (cache.get(key) == null) {
+            load(key);
+        }
         return cache.getOrDefault(key, new SoftReference<>(null)).get();
     }
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DirFileCache extends AbstractCache<String, String> {
 
@@ -18,7 +19,7 @@ public class DirFileCache extends AbstractCache<String, String> {
     }
 
     public void printAllFilesInCurrentDirectory() throws IOException {
-        getAllFilesPaths(Path.of(cachingDir))
+        getAllFilesPaths()
                 .forEach(path -> System.out.println(path.toString()));
     }
 
@@ -27,10 +28,20 @@ public class DirFileCache extends AbstractCache<String, String> {
                 .forEach(key -> System.out.println(key.toString()));
     }
 
-    private List<Path> getAllFilesPaths(Path directory) throws IOException {
+    private List<Path> getAllFilesPaths() throws IOException {
         FilesObsrv obsrv = new FilesObsrv();
-        Files.walkFileTree(directory, obsrv);
+        Files.walkFileTree(Path.of(cachingDir), obsrv);
         return obsrv.getFilesPaths();
+    }
+
+    public List<String> getAllValidTitles() throws IOException {
+        return getAllFilesPaths().stream()
+                .map(path -> {
+                    String[] strs = path.toString().split("/");
+                    return strs[strs.length - 1];
+                    })
+                .collect(Collectors.toList());
+
     }
 
     @Override
