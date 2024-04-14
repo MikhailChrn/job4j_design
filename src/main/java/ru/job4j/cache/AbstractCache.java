@@ -18,7 +18,7 @@ public abstract class AbstractCache<K, V> {
         if (cache.get(key) == null) {
             load(key);
         }
-        return cache.getOrDefault(key, new SoftReference<>(null)).get();
+        return (V) cache.get(key);
     }
 
     public final Set<K> getAllKey() {
