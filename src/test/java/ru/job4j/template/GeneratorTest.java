@@ -26,7 +26,7 @@ class GeneratorTest {
         Map<String, String> args = new HashMap<>();
         args.put("name", "Mikhail Cherneyev");
         args.put("subject", "you");
-        String expected = "I am a Petr Arsentev, Who are you?";
+        String expected = "I am a Mikhail Cherneyev, Who are you?";
         String result = generator.produce(template, args);
         assertThat(result).isEqualTo(expected);
     }
