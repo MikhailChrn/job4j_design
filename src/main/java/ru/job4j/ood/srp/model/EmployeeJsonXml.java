@@ -3,7 +3,6 @@ package ru.job4j.ood.srp.model;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement
 public class EmployeeJsonXml {
     private String name;
     private String hired;
