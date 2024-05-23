@@ -28,8 +28,8 @@ class WarehouseTest {
 
     @Test
     void whenPutBreadIntoWareHouse() {
-        AbstractStore warehouse = new Warehouse();
-        warehouse.setCurrentDate(this.currentDate);
+        AbstractStore warehouse = new Warehouse(this.currentDate);
+
         double expPrice = bread.getPrice();
         String expTitle = bread.getTitle();
         warehouse.add(bread);

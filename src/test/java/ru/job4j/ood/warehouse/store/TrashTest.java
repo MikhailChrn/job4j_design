@@ -11,6 +11,10 @@ import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 4.1. Реализовать Unit тесты под каждую реализацию хранилищ;
+ */
+
 class TrashTest {
     LocalDate currentDate;
     AbstractProduct fruit;
@@ -24,9 +28,9 @@ class TrashTest {
     }
 
     @Test
-    void whenPutBreadIntoWareHouse() {
-        AbstractStore trash = new Trash();
-        trash.setCurrentDate(this.currentDate);
+    void whenPutFruitIntoTrash() {
+        AbstractStore trash = new Trash(this.currentDate);
+
         double expPrice = fruit.getPrice();
         String expTitle = fruit.getTitle();
         trash.add(fruit);

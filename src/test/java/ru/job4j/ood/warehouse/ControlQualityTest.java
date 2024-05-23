@@ -48,9 +48,9 @@ class ControlQualityTest {
     void whenAddProductsWithDifferentFreshnessIntoControlQuality() {
         ControlQuality controlQuality = new ControlQuality(this.currentDate);
 
-        controlQuality.addStore(new Trash());
-        controlQuality.addStore(new Shop());
-        controlQuality.addStore(new Warehouse());
+        controlQuality.addStore(new Trash(this.currentDate));
+        controlQuality.addStore(new Shop(this.currentDate));
+        controlQuality.addStore(new Warehouse(this.currentDate));
 
         List<AbstractProduct> products = Arrays.asList(
                 bread, vegetable1, vegetable2, fruit);

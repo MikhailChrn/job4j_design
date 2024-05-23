@@ -35,12 +35,13 @@ class ShopTest {
 
     @Test
     void whenGetDiscountOnPotatoes() {
-        AbstractStore shop = new Shop();
-        shop.setCurrentDate(this.currentDate);
+        AbstractStore shop = new Shop(this.currentDate);
+
         double expectPrice0 = this.vegetable0.getPrice();
         double expectPrice1 = 0.8 * this.vegetable1.getPrice();
         List<AbstractProduct> products = Arrays.asList(vegetable0, vegetable1);
         products.forEach(shop::add);
+
         assertThat(expectPrice0).isEqualTo(
                 shop.findAll().get(0).getPrice());
         assertThat(expectPrice1).isEqualTo(

@@ -1,9 +1,8 @@
 package ru.job4j.ood.warehouse.store;
 
-import ru.job4j.ood.warehouse.AbstractProduct;
 import ru.job4j.ood.warehouse.AbstractStore;
 
-import java.time.Period;
+import java.time.LocalDate;
 
 /**
  * 3.4. Если срок годности вышел (израсходован полностью),
@@ -11,8 +10,7 @@ import java.time.Period;
  */
 
 public class Trash extends AbstractStore {
-    @Override
-    public boolean isValidToAdd(AbstractProduct product) {
-        return super.getPercentOfFreshness(product) <= TRASH_BELOW;
+    public Trash(LocalDate localDate) {
+        super(-1, TRASH_BELOW, localDate);
     }
 }
