@@ -6,12 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class ParkManagerTest {
     int sizeOfSimpleParking = 3;
 
     @Test
-    void whenAddNewSimpleParking() {
+    void whenAddNewSimpleParking() throws Exception {
         String title0 = "First";
         String title1 = "Second";
 
