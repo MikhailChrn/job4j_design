@@ -7,10 +7,10 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class FreshnessCalculator implements Calculator<AbstractProduct> {
-    private final LocalDate currentDate;
+    private LocalDate currentDate;
 
-    public FreshnessCalculator(LocalDate currentDate) {
-        this.currentDate = currentDate;
+    public FreshnessCalculator(LocalDate date) {
+        this.currentDate = date;
     }
 
     @Override
@@ -23,5 +23,10 @@ public class FreshnessCalculator implements Calculator<AbstractProduct> {
                 .getDays();
         currentLifeDuration = currentLifeDuration < 0 ? 0 : currentLifeDuration;
         return Math.max((int) (100 - (currentLifeDuration / shelfLifeDuration * 100)), 0);
+    }
+
+    @Override
+    public void setCurrentDate(LocalDate date) {
+        this.currentDate = date;
     }
 }

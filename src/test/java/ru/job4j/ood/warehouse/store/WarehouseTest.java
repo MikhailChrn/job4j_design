@@ -39,4 +39,19 @@ class WarehouseTest {
         assertThat(expTitle).isEqualTo(
                 warehouse.findAll().get(0).getTitle());
     }
+
+    @Test
+    void whenPutBreadIntoWareHouseAndThanClear() {
+        AbstractStore warehouse = new Warehouse(this.currentDate);
+
+        warehouse.add(bread);
+
+        assertThat(1).isEqualTo(
+                warehouse.findAll().size());
+
+        warehouse.clear();
+
+        assertThat(0).isEqualTo(
+                warehouse.findAll().size());
+    }
 }

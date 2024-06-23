@@ -2,6 +2,7 @@ package ru.job4j.ood.warehouse;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ControlQuality {
@@ -11,6 +12,13 @@ public class ControlQuality {
     public ControlQuality(LocalDate currentDate) {
         this.currentDate = currentDate;
         this.storeList = new ArrayList<>();
+    }
+
+    public void setCurrentDate(LocalDate currentDate) {
+        this.currentDate = currentDate;
+        this.storeList.stream()
+                .forEach(store ->
+                        store.setCurrentDate(this.currentDate));
     }
 
     public void addStore(AbstractStore store) {
@@ -24,5 +32,12 @@ public class ControlQuality {
 
     public List<AbstractStore> getStoreList() {
         return List.copyOf(storeList);
+    }
+
+    public void resort() {
+        storeList.stream()
+                .map(Store::clear)
+                .flatMap(Collection::stream)
+                .forEach(this::addFood);
     }
 }

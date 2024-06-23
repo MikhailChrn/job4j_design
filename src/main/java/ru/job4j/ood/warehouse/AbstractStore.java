@@ -26,8 +26,9 @@ public abstract class AbstractStore implements Store<AbstractProduct> {
         this.foodList = new ArrayList<>();
     }
 
-    public void setCurrentDate(LocalDate currentDate) {
-        this.currentDate = currentDate;
+    public void setCurrentDate(LocalDate date) {
+        this.currentDate = date;
+        this.productCalculator.setCurrentDate(this.currentDate);
     }
 
     @Override
@@ -41,6 +42,17 @@ public abstract class AbstractStore implements Store<AbstractProduct> {
     @Override
     public List<AbstractProduct> findAll() {
         return List.copyOf(foodList);
+    }
+
+    @Override
+    public List<AbstractProduct> clear() {
+        List<AbstractProduct> list = findAll();
+        foodList.clear();
+        return list;
+    }
+
+    public void removeProduct(AbstractProduct product) {
+        foodList.remove(product);
     }
 
     protected boolean check(AbstractProduct product) {

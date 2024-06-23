@@ -22,6 +22,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ControlQualityTest {
     LocalDate currentDate;
+
+    LocalDate firstDate;
+
+    LocalDate secondDate;
+
     AbstractProduct bread;
     AbstractProduct vegetable1;
     AbstractProduct vegetable2;
@@ -29,6 +34,10 @@ class ControlQualityTest {
 
     {
         this.currentDate = LocalDate.of(2024, Month.MAY, 20);
+
+        this.firstDate = currentDate.plusDays(4);
+
+        this.secondDate = currentDate.plusDays(8);
 
         this.bread =
                 new Bread("Хлеб ржано-пшеничный Бородинский, 300 гр", currentDate);
@@ -66,4 +75,35 @@ class ControlQualityTest {
                 controlQuality.getStoreList()
                         .get(2).findAll().get(0));
     }
+
+    @Test
+    void whenExecutingResortProductsInTwoTimes() {
+        ControlQuality controlQuality = new ControlQuality(this.currentDate);
+
+        controlQuality.addStore(new Trash(this.currentDate));
+        controlQuality.addStore(new Shop(this.currentDate));
+        controlQuality.addStore(new Warehouse(this.currentDate));
+
+        controlQuality.addFood(bread);
+
+        assertThat(bread).isEqualTo(
+                controlQuality.getStoreList()
+                        .get(2).findAll().get(0));
+
+        controlQuality.setCurrentDate(firstDate);
+        controlQuality.resort();
+
+        assertThat(bread).isEqualTo(
+                controlQuality.getStoreList()
+                        .get(1).findAll().get(0));
+
+        controlQuality.setCurrentDate(secondDate);
+        controlQuality.resort();
+
+        assertThat(bread).isEqualTo(
+                controlQuality.getStoreList()
+                        .get(0).findAll().get(0));
+
+    }
+
 }
